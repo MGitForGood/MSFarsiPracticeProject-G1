@@ -1,0 +1,14 @@
+#copy and paste in powershell admin
+
+$sourceFolder = "C:\Users\adminuser\Desktop\ax"
+
+#$containerUrl = "https://<storage-account-name>.blob.core.windows.net/<container-name>?<SAS-token>"
+
+$containerUrl = "https://storagef67.blob.core.windows.net/cont67?sp=racwdli&st=2024-11-12T14:25:31Z&se=2025-08-06T22:25:31Z&spr=https&sv=2022-11-02&sr=c&sig=y3zbxouP9L58%2FLBMdzmgCM6%2ByVi%2BQwZebmggOAwu3ZE%3D"
+
+$files = Get-ChildItem -Path $sourceFolder
+
+foreach ($file in $files) 
+{
+    azcopy copy "$($file.FullName)" $containerUrl
+}
