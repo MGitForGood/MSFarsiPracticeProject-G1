@@ -1,0 +1,29 @@
+# Define PowerShell installation path
+$pwshPath = "C:\Program Files\PowerShell\7\pwsh.exe"
+
+# Define the URL for the latest PowerShell MSI installer
+$msiUrl = "https://github.com/PowerShell/PowerShell/releases/latest/download/PowerShell-7.4.6-win-x64.msi"
+
+# Define the download path for the installer
+$msiPath = "$env:TEMP\PowerShell7Installer.msi"
+
+# Download the MSI file
+Write-Output "Downloading PowerShell 7 installer from $msiUrl..."
+Invoke-WebRequest -Uri $msiUrl -OutFile $msiPath -UseBasicParsing
+Write-Output "Downloaded PowerShell 7 installer to $msiPath"
+
+# Install PowerShell silently
+Write-Output "Installing PowerShell 7..."
+Start-Process -FilePath "msiexec.exe" -ArgumentList "/i `"$msiPath`" /quiet /norestart ADD_EXPLORER_CONTEXT_MENU_OPENPOWERSHELL=1" -Wait
+
+# Clean up the installer file
+Write-Output "Cleaning up the installer..."
+Remove-Item -Path $msiPath -Force -ErrorAction SilentlyContinue
+
+# Verify the installation
+if (Test-Path $pwshPath) {
+    Write-Output "PowerShell 7 has been installed successfully at $pwshPath"
+    & $pwshPath -Command '$PSVersionTable.PSVersion'
+} else {
+    Write-Output "PowerShell 7 installation failed. Please check the logs."
+}
