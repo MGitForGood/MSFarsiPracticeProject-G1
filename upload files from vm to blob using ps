@@ -4,7 +4,7 @@ $sourceFolder = "C:\Users\adminuser\Desktop\ax"
 
 #$containerUrl = "https://<storage-account-name>.blob.core.windows.net/<container-name>?<SAS-token>"
 
-$containerUrl = "https://storagef67.blob.core.windows.net/cont67?sp=racwdli&st=2024-11-12T14:25:31Z&se=2025-08-06T22:25:31Z&spr=https&sv=2022-11-02&sr=c&sig=y3zbxouP9L58%2FLBMdzmgCM6%2ByVi%2BQwZebmggOAwu3ZE%3D"
+$containerUrl = "https://storageaccounttest67ca.blob.core.windows.net/container67?sp=racwdli&st=2024-11-20T16:40:52Z&se=2025-11-21T00:40:52Z&spr=https&sv=2022-11-02&sr=c&sig=D%2B1f7vDj%2BInZRMw4FHHOgrQc%2BK39l%2Bj8V3dgWLhXAAQ%3D"
 
 $files = Get-ChildItem -Path $sourceFolder
 
