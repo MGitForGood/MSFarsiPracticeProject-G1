@@ -1,6 +1,6 @@
 #copy and paste in powershell admin
 
-$sourceFolder = "C:\Users\adminuser\Desktop\ax"
+$sourceFolder = "C:\Users\amir\Desktop\ax"
 
 #$containerUrl = "https://<storage-account-name>.blob.core.windows.net/<container-name>?<SAS-token>"
 
