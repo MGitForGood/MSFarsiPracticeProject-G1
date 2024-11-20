@@ -1,0 +1,21 @@
+# Define the path to azcopy executable default location
+$azcopyPath = "C:\AzCopy\azcopy.exe"
+
+# Verify if the path exists
+if (-Not (Test-Path $azcopyPath)) {
+    Write-Output "The specified path for azcopy.exe does not exist: $azcopyPath"
+    return
+}
+
+# Get the current system Path environment variable
+$currentPath = [System.Environment]::GetEnvironmentVariable("Path", [System.EnvironmentVariableTarget]::Machine) -split ";"
+
+# Check if the path is already in the system Path
+if (-Not ($currentPath -contains "C:\AzCopy\azcopy.exe")) {
+    # Add the path to the system Path variable
+    $newPath = ($currentPath + "C:\AzCopy\azcopy.exe") -join ";"
+    [System.Environment]::SetEnvironmentVariable("Path", $newPath, [System.EnvironmentVariableTarget]::Machine)
+    Write-Output "Added 'C:\AzCopy\azcopy.exe' to the system Path."
+} else {
+    Write-Output "'C:\AzCopy\azcopy.exe' is already in the system Path."
+}
