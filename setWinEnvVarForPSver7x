@@ -1,0 +1,21 @@
+# Define the path to PowerShell 7 executable
+$PwshPath = "C:\Program Files\PowerShell\7\pwsh.exe"
+
+# Verify if the path exists
+if (-Not (Test-Path $PwshPath)) {
+    Write-Output "The specified path for pwsh.exe does not exist: $PwshPath"
+    return
+}
+
+# Get the current system Path environment variable
+$currentPath = [System.Environment]::GetEnvironmentVariable("Path", [System.EnvironmentVariableTarget]::Machine) -split ";"
+
+# Check if the path is already in the system Path
+if (-Not ($currentPath -contains "C:\Program Files\PowerShell\7")) {
+    # Add the path to the system Path variable
+    $newPath = ($currentPath + "C:\Program Files\PowerShell\7") -join ";"
+    [System.Environment]::SetEnvironmentVariable("Path", $newPath, [System.EnvironmentVariableTarget]::Machine)
+    Write-Output "Added 'C:\Program Files\PowerShell\7' to the system Path."
+} else {
+    Write-Output "'C:\Program Files\PowerShell\7' is already in the system Path."
+}
