@@ -96,7 +96,7 @@ resource vmGermany 'Microsoft.Compute/virtualMachines@2022-08-01' = {
   location: locationGermany
   properties: {
     hardwareProfile: {
-      vmSize: 'Standard_B1s'
+      vmSize: 'Standard_B1ms'
     }
     storageProfile: {
       imageReference: {
@@ -152,4 +152,106 @@ resource automationAccount 'Microsoft.Automation/automationAccounts@2020-01-13-p
 		}
   }
 }
+@description('Name of the App Service Plan')
+param appServicePlanName string = 'appSvcPln-appPlan-test-canada-001'
 
+@description('Name of the App Service')
+param appServiceName string = 'appSvc-appSvc67-test-canada-001'
+
+@description('Location for resources')
+param location string = 'canadacentral'
+
+resource appServicePlan 'Microsoft.Web/serverfarms@2022-03-01' = {
+  name: appServicePlanName
+  location: location
+  sku: {
+    name: 'P1v2' // Adjust based on your requirement
+    tier: 'PremiumV2'
+    capacity: 1
+  }
+}
+resource appService 'Microsoft.Web/sites@2022-03-01' = {
+  name: appServiceName
+  location: location
+  properties: {
+    httpsOnly: true
+    serverFarmId: appServicePlan.id // This links the App Service to the App Service Plan
+  }
+  kind: 'app'
+  dependsOn: [
+    appServicePlan
+  ]
+}
+
+@description('Name of the NSG in Canada Central')
+param canadaNsgName string = 'nsg-nsg-test-canada-001'
+
+@description('Name of the NSG in Germany West Central')
+param germanyNsgName string = 'nsg-nsg-test-germany-001'
+
+@description('Location for Canada Central NSG')
+param canadaLocation string = 'canadacentral'
+
+@description('Location for Germany West Central NSG')
+param germanyLocation string = 'germanywestcentral'
+
+resource canadaNsg 'Microsoft.Network/networkSecurityGroups@2022-09-01' = {
+  name: canadaNsgName
+  location: canadaLocation
+  properties: {}
+}
+
+resource germanyNsg 'Microsoft.Network/networkSecurityGroups@2022-09-01' = {
+  name: germanyNsgName
+  location: germanyLocation
+  properties: {}
+}
+/*
+//@description('Name of the first VNet')
+//param vnet1Name string = 'vnet-vnet67-test-canada-001'
+
+//@description('Name of the second VNet')
+//param vnet2Name string = 'vnet-vnet67-test-germany-001'
+
+@description('Resource Group of the first VNet')
+param vnet1ResourceGroup string = 'sch-Amir-Farahanchi-rg'
+
+@description('Resource Group of the second VNet')
+param vnet2ResourceGroup string = 'sch-Amir-Farahanchi-rg'
+
+//@description('Location of the first VNet')
+//param vnet1Location string = 'canadacentral'
+
+//@description('Location of the second VNet')
+//param vnet2Location string = 'germanywestcentral'
+
+resource vnet1Peering 'Microsoft.Network/virtualNetworks/virtualNetworkPeerings@2021-05-01' = {
+  //name: 'vnetCa-to-vnetGer'
+  name: '${vnetCanadaName}-peer${vnetGermanyName}/virtualNetworkPeerings'
+  location: vnetCanada.location
+  properties: {
+    allowVirtualNetworkAccess: true
+    allowForwardedTraffic: true
+    allowGatewayTransit: false
+    useRemoteGateways: false
+    remoteVirtualNetwork: {
+      id: resourceId(vnet2ResourceGroup, 'Microsoft.Network/virtualNetworks', vnetGermany.name)
+    }
+  }
+}
+
+resource vnet2Peering 'Microsoft.Network/virtualNetworks/virtualNetworkPeerings@2021-05-01' = {
+  //name: 'vnetGer-to-vnetCa'
+  name: '${vnetGermanyName}-peer${vnetCanadaName}/virtualNetworkPeerings'
+  location: vnetGermany.location
+  properties: {
+    allowVirtualNetworkAccess: true
+    allowForwardedTraffic: true
+    allowGatewayTransit: false
+    useRemoteGateways: false
+    remoteVirtualNetwork: {
+      id: resourceId(vnet1ResourceGroup, 'Microsoft.Network/virtualNetworks', vnetCanada.name)
+    }
+  }
+}
+*/
