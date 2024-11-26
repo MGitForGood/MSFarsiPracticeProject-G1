@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Global Media Corp - Enterprise System</title>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(to top, #ff69b4, white);
+        }
+
+        .login-box {
+            background-color: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            width: 400px;
+            min-height: 200px;
+            text-align: center;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .login-box h1 {
+            font-size: 1.5rem;
+        }
+
+        .login-box input[type="text"],
+        .login-box input[type="password"] {
+            width: calc(100% - 20px);
+            padding: 5px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .login-box button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+
+        .login-box button:hover {
+            background-color: #ff69b4;
+            color: white;
+        }
+
+        .tabs-container {
+    margin-top: 20px;
+    display: none; /* Hidden until login */
+    width: 60%;  /* Set the width */
+    background: white;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    
+    /* Flexbox for centering */
+    justify-content: center;  /* Horizontally center */
+    align-items: center;      /* Vertically center */
+    /*flex-direction: column;   /* Align content vertically */
+        }
+
+        .tabs {
+            display: flex;
+            justify-content: space-between;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            border-bottom: 2px solid #ccc;
+        }
+
+        .tabs li {
+            cursor: pointer;
+            padding: 10px 20px;
+            border: 1px solid #ccc;
+            border-bottom: none;
+            background: #f4f4f4;
+            margin-right: 2px;
+            transition: all 0.2s;
+        }
+
+        .tabs li.active {
+            background: white;
+            font-weight: bold;
+        }
+
+        .tab-content {
+            padding: 15px;
+            border: 1px solid #ccc;
+            overflow: auto;
+            background: white;
+        }
+
+        .tab-pane {
+            display: none;
+        }
+
+        .tab-pane.active {
+            display: block;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+
+        table th, table td {
+            border: 1px solid #ddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        table th {
+            background-color: #f4f4f4;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: bold;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            text-align: center;
+            background: #f1f1f1;
+            padding: 10px;
+            font-size: 20px;
+        }
+
+        .footer span#current-user {
+            color: red;
+            font-weight: bold;
+        }
+
+        .info-box {
+            width: 25%;
+            position: fixed;
+            left: 0;
+            top: 20%;
+            padding: 20px;
+            background-color: #f4f4f4;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .info-box p {
+            margin: 10px 0;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="login-box" id="login-box">
+        <h1>Global Media Corp</h1>
+        <h2>Login to Enterprise System</h2>
+        <form id="login-form">
+            <label for="username">Username:</label>
+            <input type="text" id="username" maxlength="10" required>
+            <label for="password">Password:</label>
+            <input type="password" id="password" maxlength="10" required>
+            <br>
+            <button type="button" onclick="login()">Login</button>
+            <button type="reset">Reset</button>
+        </form>
+    </div>
+
+    <div class="tabs-container" id="tabs-container">
+        <h2>Welcome to Global Media Corp</h2>
+        <ul class="tabs" id="tabs">
+            <li class="active" onclick="showTab(0)">Dashboard</li>
+            <li onclick="showTab(1)">Employee Management</li>
+            <li onclick="showTab(2)">Finance</li>
+            <li onclick="showTab(3)">Sales</li>
+            <li onclick="showTab(4)">Inventory</li>
+            <li onclick="showTab(5)">Support</li>
+            <li onclick="showTab(6)">Reports</li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane active">
+                <h3>Dashboard Overview</h3>
+                <p>Key metrics and performance indicators displayed here.</p>
+                <table>
+                    <tr><th>Metric</th><th>Value</th></tr>
+                    <tr><td>Revenue</td><td>$50,000</td></tr>
+                    <tr><td>Orders</td><td>250</td></tr>
+                    <tr><td>Customer Satisfaction</td><td>85%</td></tr>
+                </table>
+                               <h3>Work Schedule</h3>
+                <p>Today's tasks: 3</p>
+                <p>Upcoming Meetings: 2 PM - Marketing meeting</p>
+            </div>
+            <div class="tab-pane">
+                <h3>Employee Management</h3>
+                <div class="form-group">
+                    <label for="employee-name">Employee Name:</label>
+                    <input type="text" id="employee-name">
+                </div>
+                <div class="form-group">
+                    <label for="employee-role">Employee Role:</label>
+                    <input type="text" id="employee-role">
+                </div>
+                <button onclick="addEmployee()">Add Employee</button>
+                <table id="employee-table" style="display:none;">
+                    <tr><th>Employee Name</th><th>Employee Role</th><th>Action</th></tr>
+                </table>
+            </div>
+            <div class="tab-pane">
+                <h3>Finance Section</h3>
+                <p>View and manage financial data.</p>
+                <button onclick="alert('Budget Approved')">Approve Budget</button>
+                <table>
+                    <tr><th>Income</th><th>Expense</th><th>Profit</th></tr>
+                    <tr><td>$200,000</td><td>$150,000</td><td>$50,000</td></tr>
+                </table>
+            </div>
+            <div class="tab-pane">
+                <h3>Sales Data</h3>
+                <table>
+                    <tr><th>Product</th><th>Sales</th><th>Stock</th><th>Value ($)</th></tr>
+                    <tr><td>Product A</td><td>150</td><td>50</td><td>7500</td></tr>
+                    <tr><td>Product B</td><td>100</td><td>30</td><td>6000</td></tr>
+                    <tr><td><b>Total</b></td><td><b>250</b></td><td><b>80</b></td><td><b>$13,500</b></td></tr>
+                </table>
+            </div>
+            <div class="tab-pane">
+                <h3>Inventory</h3>
+                <p>Track and manage stock levels for all products.</p>
+                <table>
+                    <tr><th>Item</th><th>Stock</th><th>Cost</th><th>Value</th></tr>
+                    <tr><td>Component A</td><td>200</td><td>$5</td><td>$1000</td></tr>
+                    <tr><td>Component B</td><td>150</td><td>$7</td><td>$1050</td></tr>
+                </table>
+            </div>
+            <div class="tab-pane">
+                <h3>Support</h3>
+                <div class="form-group">
+                    <label for="ticket-title">Ticket Title:</label>
+                    <input type="text" id="ticket-title">
+                </div>
+                <div class="form-group">
+                    <label for="ticket-description">Description:</label>
+                    <textarea id="ticket-description"></textarea>
+                </div>
+                <button onclick="createTicket()">Create Ticket</button>
+                <table id="ticket-table" style="display:none;">
+                    <tr><th>Date</th><th>Title</th><th>Support Unit</th><th>Status</th></tr>
+                    <tr><td>12/12/2024</td><td>Network Issue</td><td>IT</td><td>Open</td></tr>
+                </table>
+            </div>
+            <div class="tab-pane">
+                <h3>Reports</h3>
+                <button onclick="alert('Report Downloaded')">Download Report</button>
+                <table>
+                    <tr><th>Report</th><th>Status</th></tr>
+                    <tr><td>Annual Report</td><td><input type="checkbox"> Select</td></tr>
+                    <tr><td>Employee Performance</td><td><input type="checkbox"> Select</td></tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <span id="current-user">John Doe</span> | Version: 1.0 | Time: <span id="current-time"></span>
+    </div>
+
+    <script>
+        function login() {
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value.trim();
+            const loginBox = document.getElementById('login-box');
+
+            if (username && password) {
+                loginBox.style.display = "none";
+                document.getElementById('tabs-container').style.display = "block";
+                document.getElementById('current-user').innerText = username;
+                setInterval(() => {
+                    document.getElementById('current-time').textContent = new Date().toLocaleString();
+                }, 1000);
+            } else {
+                alert('Please enter both username and password.');
+            }
+        }
+
+        function showTab(index) {
+            const tabs = document.querySelectorAll('.tabs li');
+            const panes = document.querySelectorAll('.tab-pane');
+            tabs.forEach((tab, i) => {
+                tab.classList.toggle('active', i === index);
+                panes[i].classList.toggle('active', i === index);
+            });
+        }
+
+        function addEmployee() {
+            const employeeName = document.getElementById('employee-name').value;
+            const employeeRole = document.getElementById('employee-role').value;
+            if (employeeName && employeeRole) {
+                const table = document.getElementById('employee-table');
+                table.style.display = 'block';
+                const row = table.insertRow();
+                const nameCell = row.insertCell(0);
+                const roleCell = row.insertCell(1);
+                const actionCell = row.insertCell(2);
+                nameCell.textContent = employeeName;
+                roleCell.textContent = employeeRole;
+                actionCell.innerHTML = '<button onclick="deleteEmployee(this)">Delete</button>';
+                document.getElementById('employee-name').value = '';
+                document.getElementById('employee-role').value = '';
+            }
+        }
+
+        function deleteEmployee(button) {
+            const row = button.parentNode.parentNode;
+            row.parentNode.removeChild(row);
+        }
+    </script>
+
+</body>
+</html>
