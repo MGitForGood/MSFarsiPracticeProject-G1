@@ -1,4 +1,4 @@
-# Define the path to PowerShell 7 executable
+# Define the path to PowerShell 7 executable 123
 $PwshPath = "C:\Program Files\PowerShell\7\pwsh.exe"
 
 # Verify if the path exists
